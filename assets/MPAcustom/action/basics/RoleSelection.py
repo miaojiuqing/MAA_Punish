@@ -46,12 +46,7 @@ class RoleSelection(CustomAction):
         self.logger = self._logger_component.logger
 
     def _cache_path(self) -> Path:
-        return (
-            Path(__file__).resolve().parents[2]
-            / "recognition"
-            / "exclusives"
-            / "role_cache.json"
-        )
+        return Path(__file__).resolve().parents[3] / "role_cache.json"
 
     def _current_week(self) -> int:
         return datetime.date.today().isocalendar().week
@@ -109,9 +104,9 @@ class RoleSelection(CustomAction):
 
         pick = context.get_node_data("选择人物_配置")
         if pick and pick.get("focus", None):
-            pick = pick.get("focus", "")
+            pick = pick.get("focus", {}).get("pick", [])
         else:
-            pick = ""
+            pick = []
 
         condition.update(
             {
@@ -132,7 +127,7 @@ class RoleSelection(CustomAction):
             role = {}
 
             for _ in range(
-                int(condition.get("max_try", 5 if roguelike_3_mode is None else 15))
+                int(condition.get("max_try", 15 if roguelike_3_mode is None else 5))
             ):
                 if context.tasker.stopping:
                     return CustomAction.RunResult(success=True)
@@ -146,11 +141,13 @@ class RoleSelection(CustomAction):
                 )
                 context.run_action("滑动_选人")
             if need_cache:
+                for r in role.values():
+                    r["cage"] = 3  # 强制设置为有次数
                 self.save_cache(role)
                 self.logger.info(f"识别完成并写入缓存, 共识别到角色数量: {len(role)}")
                 return CustomAction.RunResult(success=True)
             for _ in range(
-                int(condition.get("max_try", 5 if roguelike_3_mode is None else 15))
+                int(condition.get("max_try", 15 if roguelike_3_mode is None else 5))
             ):
                 if context.tasker.stopping:
                     return CustomAction.RunResult(success=True)
@@ -185,7 +182,7 @@ class RoleSelection(CustomAction):
             f"队伍构成: {display_support_name or '无'} {attacker_name or '无'} {display_tank_name or '无'}",
         )
         if attacker_name and self.find_role(
-            context, role_dict, attacker_name, 5 if roguelike_3_mode is None else 16
+            context, role_dict, attacker_name, 16 if roguelike_3_mode is None else 5
         ):
             context.run_task("编入队伍")
         else:
@@ -212,7 +209,7 @@ class RoleSelection(CustomAction):
                     context.run_task("返回")
         # 缓存数据
         if roguelike_3_mode is None and condition.get("cage"):
-            #只有非肉鸽模式并且是囚笼模式才会保存缓存
+            # 只有非肉鸽模式并且是囚笼模式才会保存缓存
             for selected_name in (attacker_name, tank_name, support_name):
                 if not selected_name:
                     continue
@@ -343,6 +340,13 @@ class RoleSelection(CustomAction):
                 and result.hit
                 and isinstance(result.best_result, TemplateMatchResult)
             ):
+                is_have_role = context.run_recognition(
+                    entry="检查人物是否拥有",
+                    image=image,
+                )
+                if is_have_role and is_have_role.hit:
+                    self.logger.info(f"角色 {role_name} 未拥有")
+                    return role
                 for role_reco in result.filtered_results:
                     # 检查识别结果并提取box信息
                     if not isinstance(role_reco, TemplateMatchResult):
@@ -499,10 +503,10 @@ class RoleSelection(CustomAction):
             # 肉鸽3模式 0代表初始招募能量4，只需要提取是否被肉鸽选中。1代表初始招募能量3，只提取精通等级
             # 是否被选中
             if condition.get("roguelike_3_mode", 0) == 1:
-                is_pick = role_name == condition.get("pick", "")
+                is_pick = role_name in condition.get("pick", [])
                 is_master_level_not_full = info.get("master_level", False)
             else:
-                is_pick = role_name == condition.get("pick", "")
+                is_pick = role_name in condition.get("pick", [])
                 is_master_level_not_full = False
 
             # 精通等级是否未满
@@ -683,6 +687,7 @@ class RoleSelection(CustomAction):
 
     def save_cache(self, role: dict):
         cache_path = self._cache_path()
+        self.logger.info(f"正在保存缓存到 {cache_path}, 数据: {role}")
         cache_path.parent.mkdir(parents=True, exist_ok=True)
         cache_data = {
             "last_time": self._current_week(),

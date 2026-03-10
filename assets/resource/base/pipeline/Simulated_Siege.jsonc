@@ -45,9 +45,7 @@
             "param": {
                 "target": [
                     78,
-                    36,
-                    1,
-                    1
+                    36
                 ]
             }
         }
@@ -142,6 +140,10 @@
                 ]
             }
         },
+        "post_wait_freezes": {
+            "time": 80,
+            "timeout": 1000
+        },
         "next": [
             "常序区作战完成",
             "[JumpBack]返回"
@@ -163,6 +165,10 @@
                     "Q/3"
                 ]
             }
+        },
+        "post_wait_freezes": {
+            "time": 80,
+            "timeout": 1000
         },
         "next": [
             "常序区作战完成",
@@ -203,6 +209,10 @@
         ]
     },
     "检查特遣区次数MAX": {
+        "post_wait_freezes": {
+            "time": 80,
+            "timeout": 1000
+        },
         "recognition": {
             "type": "OCR",
             "param": {
@@ -281,6 +291,10 @@
         ]
     },
     "检查BOSS区次数MAX": {
+        "post_wait_freezes": {
+            "time": 80,
+            "timeout": 1000
+        },
         "recognition": {
             "type": "OCR",
             "param": {
@@ -458,6 +472,10 @@
         }
     },
     "添加人物": {
+        "post_wait_freezes": {
+            "time": 300,
+            "timeout": 2000
+        },
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -656,9 +674,7 @@
             "param": {
                 "target": [
                     440,
-                    635,
-                    1,
-                    1
+                    635
                 ]
             }
         },
@@ -686,9 +702,7 @@
             "param": {
                 "target": [
                     633,
-                    631,
-                    1,
-                    1
+                    631
                 ]
             }
         },
@@ -716,9 +730,7 @@
             "param": {
                 "target": [
                     818,
-                    631,
-                    1,
-                    1
+                    631
                 ]
             }
         },
@@ -746,9 +758,7 @@
             "param": {
                 "target": [
                     1020,
-                    636,
-                    1,
-                    1
+                    636
                 ]
             }
         },
@@ -776,9 +786,7 @@
             "param": {
                 "target": [
                     1205,
-                    633,
-                    1,
-                    1
+                    633
                 ]
             }
         },
@@ -806,9 +814,7 @@
             "param": {
                 "target": [
                     54,
-                    33,
-                    1,
-                    1
+                    33
                 ]
             }
         }

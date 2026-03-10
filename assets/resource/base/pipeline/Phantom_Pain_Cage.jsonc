@@ -71,9 +71,7 @@
             "param": {
                 "target": [
                     1201,
-                    71,
-                    1,
-                    1
+                    71
                 ]
             }
         }
@@ -165,45 +163,8 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    {
-                        "recognition": {
-                            "type": "ColorMatch",
-                            "param": {
-                                "roi": [
-                                    17,
-                                    424,
-                                    112,
-                                    110
-                                ],
-                                "count": 2000,
-                                "connected": true,
-                                "upper": [
-                                    8,
-                                    8,
-                                    8
-                                ],
-                                "lower": [
-                                    0,
-                                    0,
-                                    0
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "recognition": {
-                            "type": "OCR",
-                            "param": {
-                                "roi": [
-                                    1050,
-                                    235,
-                                    115,
-                                    40
-                                ],
-                                "expected": "^(?!^0$).+$"
-                            }
-                        }
-                    }
+                    "检查是否存在分数",
+                    "检查是否是最终难度"
                 ]
             }
         },
@@ -220,45 +181,8 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    {
-                        "recognition": {
-                            "type": "ColorMatch",
-                            "param": {
-                                "roi": [
-                                    17,
-                                    424,
-                                    112,
-                                    110
-                                ],
-                                "count": 2000,
-                                "connected": true,
-                                "upper": [
-                                    8,
-                                    8,
-                                    8
-                                ],
-                                "lower": [
-                                    0,
-                                    0,
-                                    0
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "recognition": {
-                            "type": "OCR",
-                            "param": {
-                                "roi": [
-                                    1050,
-                                    235,
-                                    115,
-                                    40
-                                ],
-                                "expected": "^(?!^0$).+$"
-                            }
-                        }
-                    }
+                    "检查是否存在分数",
+                    "检查是否是最终难度"
                 ]
             }
         },
@@ -275,45 +199,8 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    {
-                        "recognition": {
-                            "type": "ColorMatch",
-                            "param": {
-                                "roi": [
-                                    17,
-                                    424,
-                                    112,
-                                    110
-                                ],
-                                "count": 2000,
-                                "connected": true,
-                                "upper": [
-                                    8,
-                                    8,
-                                    8
-                                ],
-                                "lower": [
-                                    0,
-                                    0,
-                                    0
-                                ]
-                            }
-                        }
-                    },
-                    {
-                        "recognition": {
-                            "type": "OCR",
-                            "param": {
-                                "roi": [
-                                    1050,
-                                    235,
-                                    115,
-                                    40
-                                ],
-                                "expected": "^(?!^0$).+$"
-                            }
-                        }
-                    }
+                    "检查是否存在分数",
+                    "检查是否是最终难度"
                 ]
             }
         },
@@ -327,20 +214,12 @@
     },
     "没打满": {
         "recognition": {
-            "type": "Custom",
+            "type": "And",
             "param": {
-                "custom_recognition": "LOp",
-                "custom_recognition_param": {
-                    "mode": "or",
-                    "nodes": [
-                        [
-                            "检查是否是最终难度"
-                        ],
-                        [
-                            "检查是否存在分数"
-                        ]
-                    ]
-                }
+                "all_of": [
+                    "检查是否是最终难度_反向",
+                    "检查是否存在分数_反向"
+                ]
             }
         },
         "next": [
@@ -349,7 +228,8 @@
             "挑战次数不足_弹窗",
             "[JumpBack]作战准备",
             "[JumpBack]打开幻痛囚笼",
-            "没打满"
+            "没打满",
+            "[JumpBack]确定"
         ]
     },
     "检查是否是最终难度": {
@@ -379,15 +259,116 @@
     },
     "检查是否存在分数": {
         "recognition": {
-            "type": "OCR",
+            "type": "And",
+            "param": {
+                "all_of": [
+                    {
+                        "sub_name": "_蓝色文字",
+                        "recognition": {
+                            "type": "ColorMatch",
+                            "param": {
+                                "method": 40,
+                                "roi": [
+                                    947,
+                                    162,
+                                    333,
+                                    184
+                                ],
+                                "lower": [
+                                    100,
+                                    150,
+                                    150
+                                ],
+                                "upper": [
+                                    105,
+                                    255,
+                                    255
+                                ],
+                                "count": 10
+                            }
+                        }
+                    },
+                    {
+                        "recognition": {
+                            "type": "OCR",
+                            "param": {
+                                "roi": "_蓝色文字",
+                                "only_rec": true,
+                                "expected": "^(?!^0$).+$"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "检查是否是最终难度_反向": {
+        "recognition": {
+            "type": "ColorMatch",
             "param": {
                 "roi": [
-                    1050,
-                    235,
-                    115,
-                    40
+                    17,
+                    424,
+                    112,
+                    110
                 ],
-                "expected": "^(?!^0$).+$"
+                "count": 2000,
+                "connected": true,
+                "upper": [
+                    214,
+                    220,
+                    226
+                ],
+                "lower": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        }
+    },
+    "检查是否存在分数_反向": {
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    {
+                        "sub_name": "_蓝色文字",
+                        "recognition": {
+                            "type": "ColorMatch",
+                            "param": {
+                                "roi": [
+                                    947,
+                                    162,
+                                    333,
+                                    184
+                                ],
+                                "lower": [
+                                    13,
+                                    112,
+                                    189
+                                ],
+                                "upper": [
+                                    36,
+                                    115,
+                                    190
+                                ],
+                                "count": 10,
+                                "connected": true
+                            }
+                        }
+                    },
+                    {
+                        "recognition": {
+                            "type": "OCR",
+                            "param": {
+                                "roi": "_蓝色文字",
+                                "only_rec": true,
+                                "expected": "^0$"
+                            }
+                        }
+                    }
+                ]
             }
         }
     },
@@ -416,6 +397,7 @@
         "next": [
             "[JumpBack]识别人物",
             "[JumpBack]战斗中",
+            "[JumpBack]载入中",
             "战斗结束",
             "挑战次数不足_弹窗",
             "[JumpBack]耐力值不足",
@@ -424,6 +406,7 @@
             "[JumpBack]查看Boss_雷队",
             "[JumpBack]查看Boss_物队",
             "[JumpBack]查看Boss_冰队",
+            "[JumpBack]查看终极区Boss",
             "[JumpBack]没打过",
             "意外处理_没识别到返回"
         ]
@@ -489,7 +472,10 @@
             "type": "Click"
         },
         "next": [
-            "返回主菜单"
+            "一键领取_囚笼",
+            "关闭囚笼奖励界面",
+            "[JumpBack]领取囚笼奖励",
+            "[JumpBack]返回"
         ]
     },
     "未命中BOSS名": {
@@ -498,6 +484,123 @@
         },
         "next": [
             "返回主菜单"
+        ]
+    },
+    "查看终极区Boss_A区": {
+        "max_hit": 1,
+        "on_error": [
+            "未命中BOSS名"
+        ],
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    0,
+                    53,
+                    193,
+                    93
+                ],
+                "expected": [
+                    "特异型机械体·马德拉",
+                    "光辉行进者",
+                    "国王",
+                    "斯凯奇",
+                    "修特罗尔",
+                    "柯蕾多尔",
+                    "蒙扎诺夫人",
+                    "维罗妮卡",
+                    "格温普兰",
+                    "坠星·帕瓦特",
+                    "埃比阿提斯",
+                    "千子",
+                    "监管者",
+                    "墨利诺厄"
+                ],
+                "order_by": "Vertical"
+            }
+        },
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "PPOverride",
+                "custom_action_param": {
+                    "选择角色程序": {
+                        "action": {
+                            "param": {
+                                "custom_action_param": {
+                                    "cage": true
+                                }
+                            }
+                        }
+                    },
+                    "识别人物": {
+                        "enabled": true
+                    }
+                }
+            }
+        },
+        "next": [
+            "清除队伍"
+        ]
+    },
+    "查看终极区Boss": {
+        "focus": {
+            "Node.Recognition.Succeeded": "已选择终极区"
+        },
+        "max_hit": 1,
+        "on_error": [
+            "未命中BOSS名"
+        ],
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    0,
+                    53,
+                    193,
+                    93
+                ],
+                "expected": [
+                    "特异型机械体",
+                    "光辉行进者",
+                    "国王",
+                    "斯凯奇",
+                    "修特罗尔",
+                    "柯蕾多尔",
+                    "蒙扎诺夫人",
+                    "维罗妮卡",
+                    "格温普兰",
+                    "坠星·帕瓦特",
+                    "埃比阿提斯",
+                    "千子",
+                    "监管者",
+                    "墨利诺厄"
+                ],
+                "order_by": "Vertical"
+            }
+        },
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "PPOverride",
+                "custom_action_param": {
+                    "选择角色程序": {
+                        "action": {
+                            "param": {
+                                "custom_action_param": {
+                                    "cage": true
+                                }
+                            }
+                        }
+                    },
+                    "识别人物": {
+                        "enabled": true
+                    }
+                }
+            }
+        },
+        "next": [
+            "清除队伍"
         ]
     },
     "查看Boss_冰队": {
@@ -965,7 +1068,10 @@
         }
     },
     "打开幻痛囚笼": {
-        "post_delay": 1000,
+        "post_wait_freezes": {
+            "time": 500,
+            "timeout": 2000
+        },
         "recognition": {
             "type": "OCR",
             "param": {
@@ -1001,15 +1107,11 @@
             "param": {
                 "begin": [
                     800,
-                    400,
-                    0,
-                    0
+                    400
                 ],
                 "end": [
                     400,
-                    400,
-                    0,
-                    0
+                    400
                 ]
             }
         }
@@ -1077,8 +1179,6 @@
             "param": {
                 "target": [
                     10,
-                    0,
-                    0,
                     0
                 ]
             }

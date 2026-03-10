@@ -191,6 +191,7 @@ ROLE_ACTIONS = {
             "人物索引/比安卡/晖暮/晖暮.png",
             "人物索引/比安卡/晖暮/晖暮_终解.png",
             "人物索引/比安卡/晖暮/晖暮_绯烬黯棘.png",
+            "人物索引/比安卡/晖暮/晖暮_旖夜咏奏.png",
         ],
         "attack_template": "自定义战斗/晖暮.png",
     },
@@ -585,4 +586,18 @@ ROLE_ACTIONS = {
         ],
         "attack_template": "自定义战斗/辉晓.png",
     },
+    "罗塞塔·极锋":{
+         "name": "极锋",
+        "type": "Tank",
+        "cls_name": "GeneralFight",
+        "metadata": {
+            "dark": 100,
+            "generation": 0,
+        },
+        "template": [
+            "人物索引/罗塞塔/极锋/极锋.png",
+            "人物索引/罗塞塔/极锋/极锋_终解.png",
+        ],
+        "attack_template": "自定义战斗/极锋.png",
+    }
 }
