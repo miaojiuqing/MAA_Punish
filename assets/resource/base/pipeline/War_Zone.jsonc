@@ -141,8 +141,38 @@
             }
         },
         "next": [
-            "进入战区奖励"
+            "进入战区奖励",
+            "[JumpBack]new弹窗处理"
         ]
+    },
+    "new弹窗处理": {
+        //这弹窗不知道咋触发的，只知道卡这里了
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    516,
+                    286,
+                    261,
+                    143
+                ],
+                "expected": [
+                    "NEW"
+                ] //未测试
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target": [
+                    446,
+                    5,
+                    107,
+                    40
+                ]
+            }
+        },
+        "post_delay": 300
     },
     "进入战区奖励": {
         "recognition": {
