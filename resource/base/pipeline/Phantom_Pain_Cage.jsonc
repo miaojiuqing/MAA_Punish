@@ -92,6 +92,7 @@
             "检查主界面2",
             "[JumpBack]关闭难度说明",
             "[JumpBack]没打满",
+            "[JumpBack]战斗结束",
             "[JumpBack]意外处理_进入作战界面"
         ]
     },
@@ -117,7 +118,7 @@
                 ],
                 "method": 40,
                 "connected": true,
-                "count": 100
+                "count": 1000
             }
         },
         "post_delay": 1000,
@@ -144,6 +145,7 @@
             "检查主界面2",
             "[JumpBack]关闭难度说明",
             "[JumpBack]没打满",
+            "[JumpBack]战斗结束",
             "[JumpBack]意外处理_进入作战界面"
         ]
     },
@@ -196,6 +198,7 @@
             "检查主界面2",
             "[JumpBack]关闭难度说明",
             "[JumpBack]没打满",
+            "[JumpBack]战斗结束",
             "[JumpBack]意外处理_进入作战界面"
         ]
     },
@@ -234,7 +237,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "作战准备"
+                    "作战开始"
                 ]
             }
         },
@@ -316,6 +319,7 @@
         },
         "next": [
             "囚笼作战程序",
+            "[JumpBack]战斗结束",
             "挑战次数不足_弹窗",
             "[JumpBack]打开幻痛囚笼",
             "[JumpBack]确定",
